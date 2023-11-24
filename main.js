@@ -1,21 +1,40 @@
 // Asegúrate de que D3.js esté incluido antes de este script
 
 // Seleccionamos el tercer gráfico y agregamos un SVG
-const SVG = d3.select("#chart").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%");
+const height_discos = 800;
+const width_discos = 1052;
+
+const height = 400;
+const width = 400;
+
+const margin = 50;
+
+const imgHeight = 180;
+
+
+const imagesPerRow = 4;
+
+const SVG = d3.select("#chart1").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+    
 const SVG2 = d3.select("#chart2").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%");
+    .attr("width", width)
+    .attr("height", height);
+
 const SVG3 = d3.select("#chart3").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%");
+    .attr("width", width)
+    .attr("height", height);
+
 const SVG4 = d3.select("#chart4").append("svg")
-      .attr("width", "100%")
-      .attr("height", "100%");    
+      .attr("width", width_discos)
+      .attr("height", height_discos);
+
+      
+
 
       // leemos los datos del archivo CSV con el nombre de los artistas
-let kanye = d3.csv("data/kanye.csv", d=> {
+let kanye_discos = d3.json("https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/data/ye_albums.json", d=> {
     return {
         nombre: d.Nombre,
         artista: d.Artista,
@@ -23,40 +42,90 @@ let kanye = d3.csv("data/kanye.csv", d=> {
         release: d.release_date,
         popularidad: parseInt(d.Popularidad),
         duracion: parseInt(d.duration_ms),
-        img: d.img
+        img: d.Imagen
     }
 }
 ).then(data => {
     console.log(data);
-    // Seleccionamos el primer gráfico y agregamos un SVG
-    const SVG = d3.select("#chart").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%");
-    const SVG2 = d3.select("#chart2").append("svg")
-    .attr("width", "100%")
 
-    // Creamos un círculo en el SVG
-    SVG.append("circle")
-      .attr("cx", "50%") // Centro del círculo en el 50% del ancho del SVG
-      .attr("cy", "50%") // Centro del círculo en el 50% del alto del SVG
-      .attr("r", 40) // Radio del círculo
-      .attr("fill", "blue"); // Color de relleno del círculo
-
-    SVG4.append("circle")
-      .attr("cx", "50%") // Centro del círculo en el 50% del ancho del SVG
-      .attr("cy", "50%") // Centro del círculo en el 50% del alto del SVG      .attr("r", 40) // Radio del círculo
-      .attr("fill", "blue"); // Color de relleno del círculo
+    let svgHeight = Math.ceil(data.length / imagesPerRow) * (imgHeight + margin);
+    SVG4.attr("height", svgHeight);
 
 
-    // Creamos un rectángulo en el SVG
-    SVG2.append("rect")
-      .attr("x", 50) // Posición en X del rectángulo
-      .attr("y", 50) // Posición en Y del rectángulo
-      .attr("width", 100) // Ancho del rectángulo
-      .attr("height", 50) // Alto del rectángulo
-      .attr("fill", "red"); // Color de relleno del rectángulo
 
-      // cerramos
-    }
+
+    data.forEach((d, i) => {
+
+      const patternId = `pattern${i}`;
+      
+
+      const SVG4 = d3.select("#svg-container").select("svg")
+      .attr("width", "100%")
+      .attr("height", data.length / imagesPerRow * (imgHeight + margin));
+
+      // Calcular la posición x e y basada en el índice
+      const x = (i % imagesPerRow) * (imgHeight + margin)+ 80;
+      const y = Math.floor(i / imagesPerRow) * (imgHeight + margin);
+
+      SVG4.append("foreignObject")
+      .attr("x", x)
+      .attr("y", y + imgHeight + 5)
+      .attr("width", imgHeight)
+      .attr("height", 20)
+      .append("xhtml:body")
+      .style("font", "14px 'Circular'")
+      .html(`<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.Album}</div>`);
+
+
+      // Crear un patrón único para cada imagen
+      const pattern = SVG4.append("defs")
+        .append("pattern")
+          .attr("id", patternId)
+          .attr("width", 1)
+          .attr("height", 1)
+          .attr("patternContentUnits", "objectBoundingBox");
+      
+      pattern.append("image")
+          .attr("href", d.Imagen)
+          .attr("width", 1)
+          .attr("height", 1)
+          .attr("preserveAspectRatio", "xMidYMid slice");
+      
+      // Crear el rectángulo y aplicar el patrón de imagen
+      SVG4.append("rect")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("width", imgHeight)
+        .attr("height", imgHeight)
+        .attr("fill", `url(#${patternId})`);
+
+        const textX = x + imgHeight / 2;
+        const textY = y + imgHeight + 15; 
+
+            SVG4.append("foreignObject")
+            .attr("x", x)
+            .attr("y", y + imgHeight + 5) // Posicionamiento debajo de la imagen
+            .attr("width", imgHeight) // El ancho es el mismo que el de la imagen
+            .attr("height", 20) // Altura del contenedor de texto
+            .append("xhtml:body")
+            .style("font", "14px 'Circular'")
+            .html(`<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.Album}</div>`)
+
+        
+
+            const row = Math.floor(i / imagesPerRow);
+            const yForeign = (row * (imgHeight + margin)) + imgHeight + 5;
+
+            SVG4.append("foreignObject")
+            .attr("x", x)
+            .attr("y", yForeign)
+
+
+
+
+
+    
+  });
+}
     );
     
