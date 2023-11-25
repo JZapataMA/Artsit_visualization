@@ -8,10 +8,11 @@ body { margin: 0; font-family: Arial, sans-serif;
 .chart { border: 1px solid black; margin-bottom: 10px; height: 150px; }
 .full { width: 100%; height: 300px; }
 svg {
-    border: solid 4px white;
+    border: solid 2px rgb(90, 90, 90);
 }
 #svg-container {
-    border: solid 4px white;
+    border: solid 2px rgb(90, 90, 90);
     height: auto; /* o una altura específica que pueda contener todos tus elementos */
     overflow-y: auto; /* asegúrate de que esto esté permitiendo el scroll */
+    overflow-x: hidden; /* asegúrate de que esto esté permitiendo el scroll */
 }

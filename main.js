@@ -1,18 +1,18 @@
 // Asegúrate de que D3.js esté incluido antes de este script
 
 // Seleccionamos el tercer gráfico y agregamos un SVG
-const height_discos = 800;
-const width_discos = 1052;
+const height_discos = 1500;
+const width_discos = 500;
 
-const height = 400;
-const width = 400;
+const height = 600;
+const width = 600;
 
 const margin = 50;
 
-const imgHeight = 180;
+const imgHeight = 190;
 
 
-const imagesPerRow = 4;
+const imagesPerRow = 3;
 
 const SVG = d3.select("#chart1").append("svg")
     .attr("width", width)
@@ -34,7 +34,7 @@ const SVG4 = d3.select("#chart4").append("svg")
 
 
       // leemos los datos del archivo CSV con el nombre de los artistas
-let kanye_discos = d3.json("https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/data/ye_albums.json", d=> {
+let kanye_discos = d3.json("https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/data/taylor_albums.json", d=> {
     return {
         nombre: d.Nombre,
         artista: d.Artista,
@@ -52,8 +52,6 @@ let kanye_discos = d3.json("https://raw.githubusercontent.com/JZapataMA/Artsit_v
     SVG4.attr("height", svgHeight);
 
 
-
-
     data.forEach((d, i) => {
 
       const patternId = `pattern${i}`;
@@ -61,7 +59,7 @@ let kanye_discos = d3.json("https://raw.githubusercontent.com/JZapataMA/Artsit_v
 
       const SVG4 = d3.select("#svg-container").select("svg")
       .attr("width", "100%")
-      .attr("height", data.length / imagesPerRow * (imgHeight + margin));
+      .attr("height", data.length / imagesPerRow * (imgHeight + margin) + 80);
 
       // Calcular la posición x e y basada en el índice
       const x = (i % imagesPerRow) * (imgHeight + margin)+ 80;
@@ -120,11 +118,6 @@ let kanye_discos = d3.json("https://raw.githubusercontent.com/JZapataMA/Artsit_v
             .attr("x", x)
             .attr("y", yForeign)
 
-
-
-
-
-    
   });
 }
     );
