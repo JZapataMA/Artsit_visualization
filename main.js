@@ -674,7 +674,7 @@ function showinfoalbum(data){
         // usemos la fuente Circular
         .style("font", "25px 'Circular'")
         .attr("fill", "white")
-        .text(`Artista: ${data.release_date}`);
+        .text(`Fecha de lanzamiento: ${data.release_date}`);
 
 
     SVG6.append("text")
