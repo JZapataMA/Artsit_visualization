@@ -86,6 +86,15 @@ const width_discos = 600;
 const height = 600;
 const width = 600;
 
+const HEIGHT_C1 = 800;
+const WIDTH_C1 = 1600;
+
+const HEIGHT_C3 = 800;
+const WIDTH_C3 = 1600;
+
+const HEIGHT_C5 = 800;
+const WIDTH_C5 = 1800;
+
 const margin = 60;
 
 const imgHeight = 190;
@@ -99,18 +108,26 @@ const imagesPerRow = 3;
 const SVG = d3.select("#header").append("svg")
     .attr("width", 1920)
     .attr("height", 300);
+
+const SVG1 = d3.select("#chart1").append("svg")
+.attr("width", WIDTH_C1)
+.attr("height", HEIGHT_C1);
     
 const SVG2 = d3.select("#chart2").append("svg")
     .attr("width", width)
     .attr("height", height_discos - 200);
 
 const SVG3 = d3.select("#chart3").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", WIDTH_C3)
+    .attr("height", HEIGHT_C3);
 
 const SVG4 = d3.select("#chart4").append("svg")
       .attr("width", width_discos)
       .attr("height", height_discos);
+    
+const SVG5 = d3.select("#chart5").append("svg")
+        .attr("width", WIDTH_C5)
+        .attr("height", HEIGHT_C5);
 
 
 const defs = SVG.append('defs');
@@ -356,6 +373,158 @@ function updateVisualization(data,canciones) {
         .append("xhtml:body")
         .style("font", "14px 'Circular'")
         .html(d => `<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.Album}</div>`);
+
+
+    // Agregamos el grafico de barras de Popularidad
+
+    // Define márgenes para el gráfico de barras
+    const marginsBar = { top: 20, right: 30, bottom: 40, left: 200 };
+    const innerWidthBar = WIDTH_C1 - marginsBar.left - marginsBar.right;
+    const innerHeightBar = HEIGHT_C1 - marginsBar.top - marginsBar.bottom;
+
+    // Escalas y ejes para el gráfico de barras
+    var xScaleBar = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.Popularidad)])
+        .range([0, innerWidthBar]);
+
+    var yScaleBar = d3.scaleBand()
+        .domain(data.map(d => d.Album))
+        .range([0, innerHeightBar])
+        .padding(0.1);
+
+    // Seleccionar y añadir el grupo que contendrá el gráfico de barras
+    const gBar = SVG1.append('g')
+        .attr('transform', `translate(${marginsBar.left},${marginsBar.top})`);
+
+    // Agregar barras
+    gBar.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", 0)
+        .attr("y", d => yScaleBar(d.Album))
+        .attr("width", d => xScaleBar(d.Popularidad))
+        .attr("height", yScaleBar.bandwidth())
+        .attr("fill", "steelblue");
+
+    // Agregar ejes
+    gBar.append("g")
+        .call(d3.axisLeft(yScaleBar));
+
+    gBar.append("g")
+        .attr("transform", `translate(0,${innerHeightBar})`)
+        .call(d3.axisBottom(xScaleBar));
+
+    // Etiquetas de los ejes
+    gBar.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", innerWidthBar / 2)
+        .attr("y", innerHeightBar + marginsBar.bottom - 10)
+        .text("Popularidad")
+        .attr("fill", "white");
+
+    gBar.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -marginsBar.left + 20)
+        .attr("x", -marginsBar.top - (innerHeightBar / 2))
+        .text("Álbum")
+        .attr("font-size", "20px")
+        .attr("fill", "white");
+
+
+    SVG1.attr("transform", "translate(80, 0)");
+
+    // Agregamos el grafico de barras de Duracion
+
+    // Escalas y ejes para el gráfico de barras
+    var xScaleBar = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d["Duración (min)"])])
+        .range([0, innerWidthBar]);
+
+    var yScaleBar = d3.scaleBand()
+        .domain(data.map(d => d.Album))
+        .range([0, innerHeightBar])
+        .padding(0.1);
+
+    // Seleccionar y añadir el grupo que contendrá el gráfico de barras
+    const gBar2 = SVG3.append('g')
+        .attr('transform', `translate(${marginsBar.left},${marginsBar.top})`);
+
+    // Agregar barras
+    gBar2.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", 0)
+        .attr("y", d => yScaleBar(d.Album))
+        .attr("width", d => xScaleBar(d["Duración (min)"]))
+        .attr("height", yScaleBar.bandwidth())
+        .attr("fill", "steelblue");
+
+    // Agregar ejes
+    gBar2.append("g")
+        .call(d3.axisLeft(yScaleBar));
+
+    gBar2.append("g")
+        .attr("transform", `translate(0,${innerHeightBar})`)
+        .call(d3.axisBottom(xScaleBar));
+
+    // Etiquetas de los ejes
+    gBar2.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", innerWidthBar / 2)
+        .attr("y", innerHeightBar + marginsBar.bottom - 10)
+        .text("Duración (min)")
+        .attr("fill", "white");
+
+    gBar2.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -marginsBar.left + 20)
+        .attr("x", -marginsBar.top - (innerHeightBar / 2))
+        .text("Álbum")
+        .attr("font-size", "20px")
+        .attr("fill", "white");
+
+
+    SVG3.attr("transform", "translate(80, 0)");
+
+    // Agregamos diagrama de nodos
+
+    // Escala para el tamaño de los nodos
+    var radiusScale = d3.scaleSqrt()
+        .domain([d3.min(data, d => d.Popularidad), d3.max(data, d => d.Popularidad)])
+        .range([10, 60]); // Ajusta el rango según tus datos
+
+    // Simulación de fuerzas
+    var simulation = d3.forceSimulation(data)
+        .force("charge", d3.forceManyBody().strength(5))
+        .force("center", d3.forceCenter(WIDTH_C5 / 2, HEIGHT_C5 / 2))
+        .force("collision", d3.forceCollide(d => radiusScale(d.Popularidad) + 1))
+        .on("tick", ticked);
+
+    // Crear nodos con imágenes
+    var node = SVG5.selectAll(".node")
+        .data(data)
+        .enter().append("g")
+        .attr("class", "node");
+
+    node.append("circle")
+        .attr("r", d => radiusScale(d.Popularidad))
+        .style("fill", "white"); // Puedes agregar un borde o sombra si lo deseas
+
+    node.append("image")
+        .attr("xlink:href", d => d.Imagen)
+        .attr("x", d => -radiusScale(d.Popularidad))
+        .attr("y", d => -radiusScale(d.Popularidad))
+        .attr("height", d => 2 * radiusScale(d.Popularidad))
+        .attr("width", d => 2 * radiusScale(d.Popularidad))
+        .attr("clip-path", "circle()"); // Esto hace que la imagen se recorte en forma circular
+
+    function ticked() {
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+    }
 
     }
     
