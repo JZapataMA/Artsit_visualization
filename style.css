@@ -9,6 +9,7 @@ html {
     overflow-x: hidden;
 }
 
+
 .header-image { 
     width: 100%; 
 }
@@ -17,14 +18,27 @@ html {
 }
 .left, .right { flex: 1; padding: 10px; }
 
+#chart4{
+    margin-top: 30px;
+
+}
+#chart6{
+    margin-top: 30px;
+    background-color: rgba(197, 197, 197,0.1);
+}
 #chart2 {
-    border: solid 5px rgb(255, 255, 255);
+    background-color: rgba(197, 197, 197,0.1);
+    border-radius: 20px;
     height: 100%; /* o una altura específica que pueda contener todos tus elementos */
 }
+
 #svg-container {
-    border: solid 5px rgb(255, 255, 255);
+    border: solid 5px rgba(197, 197, 197,0.1);
+    border-radius: 20px;
     height: auto; /* o una altura específica que pueda contener todos tus elementos */
     overflow-y: auto; /* asegúrate de que esto esté permitiendo el scroll */
+    background-color: rgba(197, 197, 197,0.1);
+
 }
 .selected-album {
     stroke: #ffffff; /* Color del borde */
@@ -48,7 +62,8 @@ header {
     margin: 10px;
     height: 800px;
     width: 98%;
-    border: 5px solid rgb(255, 255, 255);
+    background-color: rgba(197, 197, 197,0.1);
+    border-radius: 20px;
     margin-top: 50px;
 }
 
@@ -70,11 +85,13 @@ header {
     margin: 10px;
     height: 800px;
     width: 98%;
-    border: 5px solid rgb(255, 255, 255);   
+    background-color: rgba(197, 197, 197,0.1);
+    border-radius: 20px;  
     margin-top: 50px;
 }
 #chart5 {
-    border: 5px solid rgb(255, 255, 255);
+    background-color: rgba(197, 197, 197,0.1);
+    border-radius: 20px;
     margin-top: 50px;
 }
 .low-opacity {
@@ -94,7 +111,8 @@ header {
     margin: 10px;
     height: 800px;
     width: 900px;
-    border: 5px solid rgb(255, 255, 255);
+    border: solid 5px rgba(197, 197, 197,0.1);
+    border-radius: 20px;
     margin-top: 50px;
 }
 
@@ -105,3 +123,13 @@ header {
     justify-content: center; / Esto los centra horizontalmente en el contenedor */
   }
 
+  .header-title {
+    font-size: 3em;
+    color: #ffffff; 
+    text-align: center; 
+    font-family: 'Arial', sans-serif; 
+    text-transform: uppercase; 
+    letter-spacing: 5px; 
+    text-shadow: 2px 2px 4px #000000; 
+    margin-bottom: 30px;
+    }

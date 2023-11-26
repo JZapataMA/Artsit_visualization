@@ -301,6 +301,7 @@ function mostrarCancionesDeAlbum(albumSeleccionado) {
         .attr("width", 550) // Ancho total del contenedor para el nombre y la duración
         .attr("height", 30) // Altura suficiente para el texto
         .append("xhtml:body")
+
         .attr("xmlns", "http://www.w3.org/1999/xhtml")
         .html(d => `
             <div style="display: flex; justify-content: space-between; width: 100%;">
@@ -310,6 +311,8 @@ function mostrarCancionesDeAlbum(albumSeleccionado) {
         `)
         .style("font", "25px 'Circular'")
         .style("color", "white")
+        .style("background-color", "rgba(127,127,127,0.09")
+        .style("border-radius", "10px")
         .style("margin", "0px");
 }
 
@@ -420,6 +423,7 @@ function updateVisualization(data,canciones) {
         .attr("height", 20)
         .append("xhtml:body")
         .style("font", "14px 'Circular'")
+        .style("background-color", "transparent")
         .html(d => `<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.Album}</div>`);
 
 
@@ -637,7 +641,7 @@ function showinfoalbum(data){
     // Crear un rectángulo como fondo
     SVG6.append("rect")
         .attr("x", 490) // Ajustar según sea necesario
-        .attr("y", 90)
+        .attr("y", 150)
         .attr("width", 320)
         .attr("height", 320)
         .attr("rx", 20) // Radio horizontal de las esquinas
@@ -649,7 +653,7 @@ function showinfoalbum(data){
     SVG6.append("image")
         .attr("xlink:href", data.img)
         .attr("x", 500) // Ajustar según sea necesario
-        .attr("y", 100) // Ajustar según sea necesario
+        .attr("y", 160) // Ajustar según sea necesario
         .attr("width", 300)
         .attr("height", 300);
 
@@ -685,7 +689,8 @@ function showinfoalbum(data){
         .attr("y", 400)
         .style("font", "25px 'Circular'")
         .attr("fill", "white")
-        .text(`# Canciones: ${data.count}`);
+        .text(`# Canciones: ${data.Canciones}`);
+        console.log(data);
 
     // agregemos la cancion mas popular ordenando las canciones por popularidad
     // y tomando la primera
@@ -693,7 +698,6 @@ function showinfoalbum(data){
     // si el artista data.Artista==Taylor Swift entonces veamos el array TaySongs
     // si el artista data.Artista==Kendrick Lamar entonces veamos el array KenSongs
     let albumSongs;
-    console.log(data);
     if (data.Artista == "Kanye West") {
         albumSongs = YeSongs.filter(song => song.Album == data.Album);
     } else if (data.Artista == "Taylor Swift") {
@@ -704,23 +708,24 @@ function showinfoalbum(data){
 
     if (albumSongs && albumSongs.length > 0) {
         const mostPopularSong = albumSongs.sort((a, b) => b.Popularidad - a.Popularidad)[0];
-        console.log(mostPopularSong);
+
 
         SVG6.append("text")
             .attr("x", 10)
-            .attr("y", 450) // Ajusta la posición según sea necesario
-            .style("font", "25px 'Circular'")
+            .attr("y", 500) // Ajusta la posición según sea necesario
+            .style("font", "22px 'Circular'")
             .attr("fill", "white")
             .text(`Canción más popular: ${mostPopularSong.Nombre}`); // Asume que la canción tiene una propiedad 'nombre'
     }
 
     SVG6.append("foreignObject")
-    .attr("x", 100)
-    .attr("y", 100)
-    .attr("width", 300)
+    .attr("x", 250)
+    .attr("y", 60)
+    .attr("width", 420)
     .attr("height", 200)
     .append("xhtml:body")
-    .style("font", "40px 'Circular'")
+    .style("font", "50px 'Circular'")
+    .style("background-color", "transparent")
     .html(d => `<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${data.Album}</div>`);
 
 }
