@@ -78,6 +78,28 @@ function selectArtist(artistCircle) {
     artistCircle.classed('selected-artist', true);
   }
 
+function showTooltippo(event, d) {
+    const tooltip = document.getElementById("tooltip");
+    tooltip.style.display = "block";
+    tooltip.style.left = event.pageX + 10 + "px";
+    tooltip.style.top = event.pageY - 25 + "px";
+    tooltip.textContent = `Popularidad: ${d.Popularidad}`;
+}
+function hideTooltip() {
+    const tooltip = document.getElementById("tooltip");
+    tooltip.style.display = "none";
+}
+
+function showTooltip2(event, data) {
+    const tooltip = document.getElementById("tooltip");
+    tooltip.style.display = "block";
+    tooltip.style.left = event.pageX + 10 + "px";
+    tooltip.style.top = event.pageY - 25 + "px";
+    tooltip.textContent = `Duración: ${data["Duración (min)"]} minutos`;
+    document.body.appendChild(tooltip);
+}
+
+
 
 
 ////////////////////////////////////////////////////// Codigos DIRECTOS //////////////////////////////////////////////////////
@@ -94,7 +116,7 @@ const HEIGHT_C3 = 800;
 const WIDTH_C3 = 1600;
 
 const HEIGHT_C5 = 800;
-const WIDTH_C5 = 1800;
+const WIDTH_C5 = 900;
 
 const margin = 60;
 
@@ -130,12 +152,16 @@ const SVG5 = d3.select("#chart5").append("svg")
         .attr("width", WIDTH_C5)
         .attr("height", HEIGHT_C5);
 
+const SVG6 = d3.select("#chart6").append("svg")
+        .attr("width", WIDTH_C5)
+        .attr("height", HEIGHT_C5);
+
 
 const defs = SVG.append('defs');
 
 const ye_pic = SVG.append("circle")
     .attr("cx", 650)
-    .attr("cy", 100)
+    .attr("cy", 110)
     .attr("r", 100)
     .attr("fill", "#FF0000")
     .on("click", onKanyeClick);
@@ -143,7 +169,7 @@ const ye_pic = SVG.append("circle")
 // AGREGUEMOS EL NOMBRE DE LOS ARTISTAS
 SVG.append("text")
     .attr("x", 650)
-    .attr("y", 220)
+    .attr("y", 230)
     .attr("text-anchor", "middle")
     .attr("font-family", "Circular")
     .attr("font-size", "20px")
@@ -153,14 +179,14 @@ SVG.append("text")
 
 const tay_pic = SVG.append("circle")
     .attr("cx", 950)
-    .attr("cy", 100)
+    .attr("cy", 110)
     .attr("r", 100)
     .attr("fill", "#FF0000")
     .on("click", onTaylorClick);
 
 SVG.append("text")
     .attr("x", 950)
-    .attr("y", 220)
+    .attr("y", 230)
     .attr("text-anchor", "middle")
     .attr("font-family", "Circular")
     .attr("font-size", "20px")
@@ -169,14 +195,14 @@ SVG.append("text")
 
 const ken_pic = SVG.append("circle")
     .attr("cx", 1250)
-    .attr("cy", 100)
+    .attr("cy", 110)
     .attr("r", 100)
     .attr("fill", "#FF0000")
     .on("click", onKendrickClick);
 
 SVG.append("text")
     .attr("x", 1250)
-    .attr("y", 220)
+    .attr("y", 230)
     .attr("text-anchor", "middle")
     .attr("font-family", "Circular")
     .attr("font-size", "20px")
@@ -351,7 +377,7 @@ function updateVisualization(data,canciones) {
         .attr("height", 1)
         .attr("patternContentUnits", "objectBoundingBox")
         .append("image")
-        .attr("href", d => d.Imagen)
+        .attr("href", d => d.img)
         .attr("width", 1)
         .attr("height", 1)
         .attr("preserveAspectRatio", "xMidYMid slice");
@@ -428,7 +454,15 @@ function updateVisualization(data,canciones) {
         .attr("y", d => yScaleBar(d.Album))
         .attr("width", d => xScaleBar(d.Popularidad))
         .attr("height", yScaleBar.bandwidth())
-        .attr("fill", "steelblue");
+        .attr("fill", "rgb(255, 0, 0)")
+        .on("mouseover", function(event, d) {
+            showTooltippo(event, d);
+        })
+        // Agrega el evento "mouseout" para ocultar el tooltip
+        .on("mouseout", function() {
+            hideTooltip();
+        });
+        ;
 
     // Agregar ejes
     gBar.append("g")
@@ -484,7 +518,11 @@ function updateVisualization(data,canciones) {
         .attr("y", d => yScaleBar(d.Album))
         .attr("width", d => xScaleBar(d["Duración (min)"]))
         .attr("height", yScaleBar.bandwidth())
-        .attr("fill", "steelblue");
+        .attr("fill", "steelblue")
+        .on("mouseover", showTooltip2)
+        .on("mouseout", hideTooltip);;
+
+    
 
     // Agregar ejes
     gBar2.append("g")
@@ -514,12 +552,27 @@ function updateVisualization(data,canciones) {
 
     SVG3.attr("transform", "translate(80, 0)");
 
+
+const bars = d3.selectAll('.bar');
+
+
+bars.attr('fill', (d, i) => i % 2 === 0 ? 'white' : 'lightgray');
+
+
+const colorScale = d3.scaleLinear()
+.domain([0, 100])
+.range(['lightyellow', 'yellow']);
+
+const bars_pop = d3.select("#chart1").select("svg").selectAll('.bar')
+.attr('fill', d => colorScale(d.Popularidad));  
+
+
     // Agregamos diagrama de nodos
 
     // Escala para el tamaño de los nodos
     var radiusScale = d3.scaleSqrt()
         .domain([d3.min(data, d => d.Popularidad), d3.max(data, d => d.Popularidad)])
-        .range([10, 60]); // Ajusta el rango según tus datos
+        .range([10, 60]);
 
     // Simulación de fuerzas
     var simulation = d3.forceSimulation(data)
@@ -528,28 +581,150 @@ function updateVisualization(data,canciones) {
         .force("collision", d3.forceCollide(d => radiusScale(d.Popularidad) + 1))
         .on("tick", ticked);
 
-    // Crear nodos con imágenes
-    var node = SVG5.selectAll(".node")
+    // Función de zoom
+    var zoomHandler = d3.zoom()
+    .on("zoom", (event) => {
+        nodeGroup.attr("transform", event.transform);
+    });
+
+    // Aplicar zoom al SVG
+    SVG5.call(zoomHandler);
+
+    // Crear grupo para los nodos
+    var nodeGroup = SVG5.append("g")
+        .attr("class", "node-group");
+
+    // Crear nodos dentro del grupo
+    var node = nodeGroup.selectAll(".node")
         .data(data)
         .enter().append("g")
-        .attr("class", "node");
+        .attr("class", "node")
+        .on("click", function(event, d) {
+            // Esta función se llama cuando un nodo es clickeado
+            node.selectAll("circle")
+            .style("stroke", null) // Remover el margen existente
+            .style("stroke-width", null);
+
+            d3.select(this).select("circle")
+                .style("stroke", "white") // color del margen
+                .style("stroke-width", "3px"); // grosor del margen
+
+            showinfoalbum(d);
+        });
 
     node.append("circle")
-        .attr("r", d => radiusScale(d.Popularidad))
-        .style("fill", "white"); // Puedes agregar un borde o sombra si lo deseas
+    .attr("r", d => radiusScale(d.Popularidad))
+    .style("fill", "white");
 
     node.append("image")
-        .attr("xlink:href", d => d.Imagen)
+        .attr("xlink:href", d => d.img)
         .attr("x", d => -radiusScale(d.Popularidad))
         .attr("y", d => -radiusScale(d.Popularidad))
         .attr("height", d => 2 * radiusScale(d.Popularidad))
         .attr("width", d => 2 * radiusScale(d.Popularidad))
-        .attr("clip-path", "circle()"); // Esto hace que la imagen se recorte en forma circular
+        .attr("clip-path", "circle()");
 
     function ticked() {
         node.attr("transform", d => `translate(${d.x},${d.y})`);
     }
 
 }
+function showinfoalbum(data){
+
+    //
+    SVG6.selectAll("*").remove();
+    
+    // Crear un rectángulo como fondo
+    SVG6.append("rect")
+        .attr("x", 490) // Ajustar según sea necesario
+        .attr("y", 90)
+        .attr("width", 320)
+        .attr("height", 320)
+        .attr("rx", 20) // Radio horizontal de las esquinas
+        .attr("ry", 20)
+        .style("fill", "lightgrey")
+        .style("opacity", 0.2); // Puedes cambiar el color según prefieras
+
+    // Agregar la imagen del álbum
+    SVG6.append("image")
+        .attr("xlink:href", data.img)
+        .attr("x", 500) // Ajustar según sea necesario
+        .attr("y", 100) // Ajustar según sea necesario
+        .attr("width", 300)
+        .attr("height", 300);
+
+    // Agregar texto para detalles del álbum
+    // Ajustar las posiciones 'y' según sea necesario
+    console.log(data);
+    SVG6.append("text")
+        .attr("x", 10)
+        .attr("y", 200)
+        // usemos la fuente Circular
+        .style("font", "50px 'Circular'")
+        .attr("fill", "white")
+        .text(`${data.Artista}`);
+
+        SVG6.append("text")
+        .attr("x", 10)
+        .attr("y", 300)
+        // usemos la fuente Circular
+        .style("font", "25px 'Circular'")
+        .attr("fill", "white")
+        .text(`Artista: ${data.release_date}`);
+
+
+    SVG6.append("text")
+        .attr("x", 10)
+        .attr("y", 350)
+        .style("font", "25px 'Circular'")
+        .attr("fill", "white")
+        .text(`Popularidad media: ${data.Popularidad}`);
+
+    SVG6.append("text")
+        .attr("x", 10)
+        .attr("y", 400)
+        .style("font", "25px 'Circular'")
+        .attr("fill", "white")
+        .text(`# Canciones: ${data.count}`);
+
+    // agregemos la cancion mas popular ordenando las canciones por popularidad
+    // y tomando la primera
+    // si el artista data.Artista==Kanye West entonces veamos el array YeSongs
+    // si el artista data.Artista==Taylor Swift entonces veamos el array TaySongs
+    // si el artista data.Artista==Kendrick Lamar entonces veamos el array KenSongs
+    let albumSongs;
+    console.log(data);
+    if (data.Artista == "Kanye West") {
+        albumSongs = YeSongs.filter(song => song.Album == data.Album);
+    } else if (data.Artista == "Taylor Swift") {
+        albumSongs = TaySongs.filter(song => song.Album == data.Album);
+    } else if (data.Artista == "Kendrick Lamar") {
+        albumSongs = KenSongs.filter(song => song.Album == data.Album);
+    }
+
+    if (albumSongs && albumSongs.length > 0) {
+        const mostPopularSong = albumSongs.sort((a, b) => b.Popularidad - a.Popularidad)[0];
+        console.log(mostPopularSong);
+
+        SVG6.append("text")
+            .attr("x", 10)
+            .attr("y", 450) // Ajusta la posición según sea necesario
+            .style("font", "25px 'Circular'")
+            .attr("fill", "white")
+            .text(`Canción más popular: ${mostPopularSong.Nombre}`); // Asume que la canción tiene una propiedad 'nombre'
+    }
+
+    SVG6.append("foreignObject")
+    .attr("x", 100)
+    .attr("y", 100)
+    .attr("width", 300)
+    .attr("height", 200)
+    .append("xhtml:body")
+    .style("font", "40px 'Circular'")
+    .html(d => `<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${data.Album}</div>`);
+
+}
+    
+
 
 

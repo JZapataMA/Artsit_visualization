@@ -66,18 +66,14 @@ header {
   }
   
 #chart1 {
-    border-radius: 10px;
+    border-radius: 40px;
     margin: 10px;
     height: 800px;
     width: 98%;
-    border: 5px solid rgb(255, 255, 255);
+    border: 5px solid rgb(255, 255, 255);   
     margin-top: 50px;
 }
 #chart5 {
-    border-radius: 10px;
-    margin: 10px;
-    height: 800px;
-    width: 98%;
     border: 5px solid rgb(255, 255, 255);
     margin-top: 50px;
 }
@@ -87,3 +83,25 @@ header {
 .reset-opacity{
     opacity: 1;
 }
+.texto-sombreado {
+    color: rgb(21, 255, 0); /* Color del texto */
+    text-shadow: -1px 1px rgb(255, 255, 255); /* Sombreado blanco */
+
+}
+
+#chart5, #chart6 {
+    border-radius: 10px;
+    margin: 10px;
+    height: 800px;
+    width: 900px;
+    border: 5px solid rgb(255, 255, 255);
+    margin-top: 50px;
+}
+
+.container-bottom {
+    display: flex;
+    flex-direction: row; /* Esto alinea los elementos secundarios en línea /
+    align-items: center; / Esto los centra verticalmente, si es necesario /
+    justify-content: center; / Esto los centra horizontalmente en el contenedor */
+  }
+
