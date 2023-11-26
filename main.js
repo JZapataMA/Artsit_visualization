@@ -77,7 +77,8 @@ function selectArtist(artistCircle) {
     // Añadir la clase 'selected-artist' al círculo que fue clickeado
     artistCircle.classed('selected-artist', true);
   }
-    
+
+
 
 ////////////////////////////////////////////////////// Codigos DIRECTOS //////////////////////////////////////////////////////
 const height_discos = 900;
@@ -325,7 +326,23 @@ function updateVisualization(data,canciones) {
             const x = (i % imagesPerRow) * (imgHeight + margin) + 80;
             const y = Math.floor(i / imagesPerRow) * (imgHeight + margin);
             return `translate(${x},${y})`;
-        });
+        })
+        .on("click", function(event, d) {
+            // Restablecer la opacidad de todos los álbumes y textos
+            SVG4.selectAll(".album").classed("low-opacity", true);
+            SVG4.selectAll(".album text").classed("low-opacity", true);
+            SVG1.selectAll(".bar").classed("low-opacity", true);
+            gBar2.selectAll(".bar").classed("low-opacity", true);
+      
+            // Mostrar las canciones del álbum seleccionado
+            mostrarCancionesDeAlbum(d.Album);
+      
+            // Establecer la opacidad del álbum seleccionado a 1 (totalmente visible)
+            d3.select(this).classed("low-opacity", false);
+            d3.select(this).select("text").classed("low-opacity", false);
+            SVG1.select(`#album-${d.Album.replace(/[^a-zA-Z0-9]/g, '-')}`).classed("low-opacity", false);
+            gBar2.select(`#album-${d.Album.replace(/[^a-zA-Z0-9]/g, '-')}`).classed("low-opacity", false);
+          });;
 
     // Agregar patrones para las imágenes de los álbumes
     albums.append("pattern")
@@ -405,6 +422,7 @@ function updateVisualization(data,canciones) {
     gBar.selectAll(".bar")
         .data(data)
         .enter().append("rect")
+        .attr("id", d => `album-${d.Album.replace(/[^a-zA-Z0-9]/g, '-')}`)
         .attr("class", "bar")
         .attr("x", 0)
         .attr("y", d => yScaleBar(d.Album))
@@ -460,6 +478,7 @@ function updateVisualization(data,canciones) {
     gBar2.selectAll(".bar")
         .data(data)
         .enter().append("rect")
+        .attr("id", data => `album-${data.Album.replace(/[^a-zA-Z0-9]/g, '-')}`)
         .attr("class", "bar")
         .attr("x", 0)
         .attr("y", d => yScaleBar(d.Album))
@@ -531,5 +550,6 @@ function updateVisualization(data,canciones) {
         node.attr("transform", d => `translate(${d.x},${d.y})`);
     }
 
-    }
-    
+}
+
+

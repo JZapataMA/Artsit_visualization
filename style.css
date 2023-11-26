@@ -81,3 +81,9 @@ header {
     border: 5px solid rgb(255, 255, 255);
     margin-top: 50px;
 }
+.low-opacity {
+    opacity: 0.5; /* Ajusta este valor según la opacidad que desees */
+  }
+.reset-opacity{
+    opacity: 1;
+}
