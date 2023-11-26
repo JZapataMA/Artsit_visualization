@@ -4,7 +4,9 @@ let kanyeData, taylorData, kendrickData;
 
 let YeSongs, TaySongs, KenSongs;
 
-let fotos;
+let artistas_df;
+
+let ye_url, tay_url, ken_url;
 
 d3.csv("https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/data/Kanye_West.csv").then(data => {
     YeSongs = data; // Almacena los datos de las canciones para usarlos más tarde
@@ -54,19 +56,30 @@ d3.csv("https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/da
 function onKanyeClick() {
     canciones = YeSongs;
   updateVisualization(kanyeData);
+  selectArtist(ye_pic);
 }
 
 function onTaylorClick() {
     canciones = TaySongs;
   updateVisualization(taylorData);
+  selectArtist(tay_pic);
 }
 
 function onKendrickClick() {
     canciones = KenSongs;
+    selectArtist(ken_pic);
   updateVisualization(kendrickData);
 }
 
+function selectArtist(artistCircle) {
+    // Remover la clase 'selected-artist' de todos los círculos
+    d3.selectAll('circle').classed('selected-artist', false);
+    // Añadir la clase 'selected-artist' al círculo que fue clickeado
+    artistCircle.classed('selected-artist', true);
+  }
+    
 
+////////////////////////////////////////////////////// Codigos DIRECTOS //////////////////////////////////////////////////////
 const height_discos = 900;
 const width_discos = 600;
 
@@ -80,9 +93,12 @@ const imgHeight = 190;
 
 const imagesPerRow = 3;
 
+
+
+
 const SVG = d3.select("#header").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", 1920)
+    .attr("height", 300);
     
 const SVG2 = d3.select("#chart2").append("svg")
     .attr("width", width)
@@ -97,6 +113,117 @@ const SVG4 = d3.select("#chart4").append("svg")
       .attr("height", height_discos);
 
 
+const defs = SVG.append('defs');
+
+const ye_pic = SVG.append("circle")
+    .attr("cx", 650)
+    .attr("cy", 100)
+    .attr("r", 100)
+    .attr("fill", "#FF0000")
+    .on("click", onKanyeClick);
+
+// AGREGUEMOS EL NOMBRE DE LOS ARTISTAS
+SVG.append("text")
+    .attr("x", 650)
+    .attr("y", 220)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "20px")
+    .attr("fill", "white")
+    .text("Kanye West");
+
+
+const tay_pic = SVG.append("circle")
+    .attr("cx", 950)
+    .attr("cy", 100)
+    .attr("r", 100)
+    .attr("fill", "#FF0000")
+    .on("click", onTaylorClick);
+
+SVG.append("text")
+    .attr("x", 950)
+    .attr("y", 220)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "20px")
+    .attr("fill", "white")
+    .text("Taylor Swift");
+
+const ken_pic = SVG.append("circle")
+    .attr("cx", 1250)
+    .attr("cy", 100)
+    .attr("r", 100)
+    .attr("fill", "#FF0000")
+    .on("click", onKendrickClick);
+
+SVG.append("text")
+    .attr("x", 1250)
+    .attr("y", 220)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "20px")
+    .attr("fill", "white")
+    .text("Kendrick Lamar");
+
+SVG.append("text")
+    .attr("x", 1225)
+    .attr("y", 290)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "50px")
+    .attr("fill", "White")
+    .text("Albums, Singles and Ep's");
+
+SVG.append("text")
+    .attr("x", 125)
+    .attr("y", 270)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "50px")
+    .attr("fill", "White")
+    .text("Canciones");
+
+SVG.append("text")
+    .attr("x", 50)
+    .attr("y", 300)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "20px")
+    .attr("fill", "White")
+    .text("Title");
+
+SVG.append("text")
+    .attr("x", 565)
+    .attr("y", 295)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "Circular")
+    .attr("font-size", "20px")
+    .attr("fill", "White")
+    .text("⌚");
+
+// Cargamos las fotos de los artistas
+d3.json('https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/data/artistas.json')
+.then(data => {
+    artistas_df = data;
+    console.log(artistas_df);
+
+    artistas_df.forEach(artista => {
+        defs.append('pattern')
+            .attr('id', `pattern-${artista.Artista.replace(/\s/g, '-')}`)
+            .attr('patternUnits', 'objectBoundingBox')
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .append('image')
+            .attr('href', artista.foto)
+            .attr('width', 200)
+            .attr('height', 200)
+            .attr('preserveAspectRatio', 'xMidYMid slice');
+    });
+
+    ye_pic.attr('fill', 'url(#pattern-Kanye-West)');
+    tay_pic.attr('fill', 'url(#pattern-Taylor-Swift)');
+    ken_pic.attr('fill', 'url(#pattern-Kendrick-Lamar)');
+});
 
 
 // recortamos el texto
@@ -106,53 +233,6 @@ SVG2.append("defs")
   .append("rect")
   .attr("width", 150) 
   .attr("height", 40);
-
-/// Creamos 3 circulos en el Header y a cada circulo le asignamos un artista
-const circle1 = SVG.append("circle")
-    .attr("cx", 100)
-    .attr("cy", 50)
-    .attr("r", 40)
-    .attr("fill", "#FF0000")
-    .on("click", onKanyeClick);
-
-const circle2 = SVG.append("circle")
-    .attr("cx", 300)
-    .attr("cy", 50)
-    .attr("r", 40)
-    .attr("fill", "#FF0000")
-    .on("click", onTaylorClick);
-
-const circle3 = SVG.append("circle")
-    .attr("cx", 500)
-    .attr("cy", 50)
-    .attr("r", 40)
-    .attr("fill", "#FF0000")
-    .on("click", onKendrickClick);
-
-// Creamos 3 botones en el Header y a cada boton le asignamos un artista
-const button1 = SVG.append("foreignObject")
-    .attr("x", 60)
-    .attr("y", 30)
-    .attr("width", 80)
-    .attr("height", 80)
-    .append("xhtml:body")
-    .html('<button type="button" class="btn btn-danger" onclick="onKanyeClick()">Kanye</button>');
-
-const button2 = SVG.append("foreignObject")
-    .attr("x", 260)
-    .attr("y", 30)
-    .attr("width", 80)
-    .attr("height", 80)
-    .append("xhtml:body")
-    .html('<button type="button" class="btn btn-danger" onclick="onTaylorClick()">Taylor</button>');
-
-const button3 = SVG.append("foreignObject")
-    .attr("x", 460)
-    .attr("y", 30)
-    .attr("width", 80)
-    .attr("height", 80)
-    .append("xhtml:body")
-    .html('<button type="button" class="btn btn-danger" onclick="onKendrickClick()">Kendrick</button>');
 
 
 
@@ -169,7 +249,7 @@ function mostrarCancionesDeAlbum(albumSeleccionado) {
         .enter()
         .append("g")
         .attr("class", "cancion")
-        .attr("transform", (d, i) => `translate(0, ${30 * (i + 1)})`); // Ajusta la posición de cada grupo
+        .attr("transform", (d, i) => `translate(20, ${31 * (i + 1)})`); // Ajusta la posición de cada grupo
 
     // Añadir un foreignObject para cada canción que recorta el texto
     cancionesGroups.append("foreignObject")
@@ -181,12 +261,12 @@ function mostrarCancionesDeAlbum(albumSeleccionado) {
         .html(d => `
             <div style="display: flex; justify-content: space-between; width: 100%;">
                 <div style="flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.Nombre}</div>
-                <div style="width: 50px; text-align: right; white-space: nowrap;">${convertirDuracion(d.duration_ms)}</div>
+                <div style="width: 80px; text-align: right; white-space: nowrap;">${convertirDuracion(d.duration_ms)}</div>
             </div>
         `)
-        .style("font", "20px 'Circular'")
+        .style("font", "25px 'Circular'")
         .style("color", "white")
-        .style("margin", "0");
+        .style("margin", "0px");
 }
 
 function convertirDuracion(duracion_ms) {

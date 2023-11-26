@@ -28,3 +28,8 @@ header {
     height: 200px; /* Altura del header */
     text-align: center; /* Asegura que el texto también esté centrado horizontalmente */
 }
+.selected-artist {
+    stroke: white;
+    stroke-width: 4; /* Ajusta el ancho del margen según lo necesites */
+  }
+  
