@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleindex.css">
+    <title>Proyecto</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Informe Proyecto</h1>
+        <p><i>Template</i> base confeccionar el informe. Se puede
+            modificar el estilo si así lo desean, pero se recomienda
+            mantener las secciones separadas para facilitar la corrección del informe.</p>
+
+        <div class="response">
+            <h3>Integrantes</h2>
+                <p>Juan Manuel Zapata</p>
+                <p>Joaquin Burdiles</p>
+        </div>
+
+        <div class="case">
+            <h2>Situación de dominio</h2>
+            <div class="response">
+                <h4>Contexto de la situación y la naturaleza de los datos</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    Nuestro proyecto trata sobre la popularidad de distintos artistas musicales
+                    reconocidos mundialmente, en este caso, por gustos personales decidimos enfocarnos 
+                    en 3 artistas, los cuales son Kanye West, Taylor Swift y Kendrick Lamar. Los datos
+                    utilizados en esta visualización fueron extraidos de la plataforma Spotify mediante
+                    la API que esta misma proporciona. Estan en formato .json y sus atributos son nombre del album, popularidad, duracion del album en minutos, nombre del artista,
+                    fecha de lanzamiento, numero de canciones y portada del album.
+                </p>
+            </div>
+            <div class="response">
+                <h4>Fuente original de los datos</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>Spotify</p>
+            </div>
+            <div class="response">
+                <h4>Usuario objetivo</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>Nuestro usuario objetivo corresponde a seguidores de Kanye West, Taylor Swift y Kendrick Lamar</p>
+            </div>
+            <div class="response">
+                <h4>Uso de la herramienta</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    En la parte superior de la pagina se pueden observar 3 circulos con imagenes de los artistas,
+                    estos pueden ser clickeados para que las visualizaciones se actualicen con los datos del artista
+                    seleccionado, luego poseemos todos sus albumes con nombres y portadas, junto a este, hay un sector vacio 
+                    que se rellena con canciones al momento de clickear un album, estas canciones perteneces a dicho album seleccionado.
+                    Luego, poseemos dos graficos de barras, el primero corresponde a la popularidad de cada album, mientras que el segundo
+                    corresponde a la duracion en minutos de cada album. Finalmente, poseemos un diagrama de nodos, donde cada nodo representa
+                    a un album con su respectiva portada, y el tamaño de este representa su popularidad, mientras mas grande el nodo, mas popular 
+                    el album. Estos nodos pueden ser clickeados para que a su derecha se refleje informacion sobre el album correspondiente.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="case">
+            <h2>Abstracción de datos</h2>
+            <div class="response">
+                <h4>Tipos de datos a utilizar en el proyecto</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    Utilizamos datos numericos y categoricos. Siendo los datos categoricos los nombres de los albumes, artistas y portadas. Y los
+                    datos numericos, la popularidad, duracion en minutos y numero de canciones de cada album.
+                </p>
+            </div>
+            <div class="response">
+                <h4>Tipos de atributos presente en los datos</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    <ul>
+                        <li><strong>Album</strong> (String): El nombre del álbum.</li>
+                        <li><strong>Artista</strong> (String): El nombre del artista, en este caso, Taylor Swift.</li>
+                        <li><strong>Popularidad</strong> (Number): Un valor numérico que representa la popularidad del álbum.</li>
+                        <li><strong>Lanzamiento</strong> (String): La fecha de lanzamiento del álbum, en formato de fecha (año-mes-día).</li>
+                        <li><strong>Imagen</strong> (String): Una URL de una imagen asociada con el álbum.</li>
+                        <li><strong>Canciones</strong> (Number): La cantidad de canciones en el álbum.</li>
+                        <li><strong>Duración (min)</strong> (Number): La duración total del álbum en minutos.</li>
+                    </ul>                      
+                </p>
+            </div>
+        </div>
+
+        <div class="case">
+            <h2>Abstracción de tareas</h2>
+            <div class="response">
+                <h4>Tarea 1 (acción + objetivo) + justificación según el dominio presentado</h4>
+                <p class="hint">
+                    No olvides que las acciones son: presentar, descubrir, anotar, producir, grabar, localizar, ubicar,
+                    navegar, explorar, identificar, comparar o resumir. Luego, los objetivos son posibles aspectos de
+                    los datos a observar. Como: distribución, proporción, valor, correlación, tendencia, outlier,
+                    feature, caminos, topología, extremos, entre otros.
+                </p>
+
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Acción: Presentar</h4>
+                <h4>Objetivo: Feature</h4>
+                <p>Justificar la acción-objetivo con el dominio presentado: Nuestra primera tarea consistio en
+                    presentar la feature "Album" mediante un selector, mostrando su nombre y portada. Asi el 
+                    usuario puede seleccionar el album que desee y ver sus canciones, como tambien conocer aquellos
+                    que no ha escuchado.
+                 </p>
+            </div>
+            <div class="response">
+                <h4>Tarea 2 (acción + objetivo) + justificación según el dominio presentado</h4>
+                <p class="hint">
+                    No olvides que las acciones son: presentar, descubrir, anotar, producir, grabar, localizar, ubicar,
+                    navegar, explorar, identificar, comparar o resumir. Luego, los objetivos son posibles aspectos de
+                    los datos a observar. Como: distribución, proporción, valor, correlación, tendencia, outlier,
+                    feature, caminos, topología, extremos, entre otros.
+                </p>
+
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Acción: Comparar</h4>
+                <h4>Objetivo: Valor</h4>
+                <p>Justificar la acción-objetivo con el dominio presentado: Buscamos comparar los valores entre albumes
+                    tanto de popularidad como de duracion. Asi podemos ver facilmente que album es mas popular, y ademas
+                    podemos hacer un analisis rapido de la duracion de cada album.
+                 </p>
+            </div>
+            <div class="response">
+                <h4>Tarea 3 (acción + objetivo) + justificación según el dominio presentado</h4>
+                <p class="hint">
+                    No olvides que las acciones son: presentar, descubrir, anotar, producir, grabar, localizar, ubicar,
+                    navegar, explorar, identificar, comparar o resumir. Luego, los objetivos son posibles aspectos de
+                    los datos a observar. Como: distribución, proporción, valor, correlación, tendencia, outlier,
+                    feature, caminos, topología, extremos, entre otros.
+                </p>
+
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Acción: Explorar</h4>
+                <h4>Objetivo: Feature</h4>
+                <p>Justificar la acción-objetivo con el dominio presentado: Nuestra ultima tarea consistio en  perimitirle 
+                    al usuario explorar los albumes mediante un diagrama de nodos, donde cada nodo representa un album, y su tamaño.
+                    De esta forma, el usuario puede ver facilmente cuales son los albumes mas populares, y al clickearlos, puede ver
+                    informacion sobre ellos. Tambien se le permite a este hacer zoom en caso de no lograr ver de forma correcta los nodos.
+                </p>
+            </div>
+        </div>
+
+        <div class="case">
+            <h2>Codificación visual e interacciones</h2>
+            <div class="response">
+                <h4>Decisiones de diseño relacionadas a la primera tarea visual</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    Para la primera tarea, decidimos crear 2 containers, uno al lado de otro, donde uno tuviera
+                    los albumes, los cuales podian ser seleccionados, y el otro tuviera las canciones del album
+                    seleccionado. Esta decision fue hecha para que el usuario pudiera ver facilmente las canciones
+                    de cada album junto a su duracion, y no tuviera que moverse a otro lado del HTML para ver su seleccion.
+                </p>
+            </div>
+            <div class="response">
+                <h4>Decisiones de diseño relacionadas a la segunda tarea visual</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    Para la segunda tarea visual, decidimos crear 2 graficos de barras, uno bajo el otro, donde el primero
+                    representa la popularidad de cada album y el segundo representa su duracion. El primer grafico posee barras
+                    amarillas, mientras menos popular, mas clara es la barra, y mientras mas popular, mas fuerte es el color de esta,
+                    esta decision se tomo para que resaltaran aquellos albumes que son mas populares. El segundo grafico posee barras
+                    con colores blanco y gris de forma intercalada, estos colores fueron decididos con el motivo de poder diferenciar
+                    bien las barras contiguas, y que el usuario pudiera ver facilmente la duracion de cada album.
+                </p>
+            </div>
+            <div class="response">
+                <h4>Decisiones de diseño relacionadas a la tercera tarea visual</h4>
+                <!-- Puedes agregar los P que sean necesarios -->
+                <h4>Respuesta:</h4>
+                <p>
+                    Para la tercera tarea, decidimos crear dos containers, uno al lado del otro, donde el de la izquierda posee
+                    un diagrama de nodos, donde podemos seleccionar cualquier album, y el de la derecha posee informacion sobre
+                    el album seleccionado. Decidimos hacer esto de esa forma con el fin de que el usuario pueda explorar los albumes
+                    directamente desde su popularidad. De esta forma, el usuario puede tomar decisiones como por ejemplo, que album escuchar
+                    basado en su popularidad, duracion y cantidad de canciones.
+                </p>
+            </div>
+        </div>
+
+        <div class="case">
+            <h3>
+                <a href="vis.html">Enlace para acceder a la visualización</a>
+            </h3>
+        </div>
+
+</body>
+
+</html>
