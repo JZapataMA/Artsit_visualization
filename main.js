@@ -301,6 +301,11 @@ function convertirDuracion(duracion_ms) {
 function updateVisualization(data,canciones) {
     // Asegúrate de que el SVG tiene la altura correcta
     SVG2.selectAll("*").remove();
+    SVG1.selectAll("*").remove();
+    SVG3.selectAll("*").remove();
+    SVG5.selectAll("*").remove();
+    
+
     let svgHeight = Math.ceil(data.length / imagesPerRow) * (imgHeight + margin) + 50;
     
     const SVG4 = d3.select("#svg-container").select("svg")
