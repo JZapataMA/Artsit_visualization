@@ -5,26 +5,26 @@ body { margin: 0; font-family: Arial, sans-serif;
 .header-image { width: 100%; }
 .container { display: flex; }
 .left, .right { flex: 1; padding: 10px; }
-.chart { border: 1px solid rgb(0, 0, 0); margin-bottom: 10px; height: 150px; }
+.chart { border: 5px solid rgb(0, 0, 0); margin-bottom: 10px; height: 150px; }
 .full { width: 100%; height: 300px; }
-svg {
-    border: solid 2px rgb(90, 90, 90);
+#chart2 {
+    border: solid 5px rgb(255, 255, 255);
 }
 #svg-container {
-    border: solid 2px rgb(90, 90, 90);
+    border: solid 5px rgb(255, 255, 255);
     height: auto; /* o una altura específica que pueda contener todos tus elementos */
     overflow-y: auto; /* asegúrate de que esto esté permitiendo el scroll */
     overflow-x: hidden; /* asegúrate de que esto esté permitiendo el scroll */
 }
 .selected-album {
-    stroke: #e0e0e0; /* Color del borde */
-    stroke-width: 7; /* Ancho del borde */
+    stroke: #ffffff; /* Color del borde */
+    stroke-width: 5px; /* Ancho del borde */
     stroke-opacity: 1; /* Opacidad del borde */
 }
 header {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1000px; /* Altura del header */
+    height: 200px; /* Altura del header */
     text-align: center; /* Asegura que el texto también esté centrado horizontalmente */
 }
