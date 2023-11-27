@@ -1,135 +1,140 @@
 body { 
-    margin: 0; 
-    font-family: Arial, sans-serif; 
-    background-color: rgb(15, 15, 15);
-    color: #f5f5f5;
+margin: 0; 
+font-family: Arial, sans-serif; 
+background-color: rgb(15, 15, 15);
+color: #f5f5f5;
 }
 
 html { 
-    overflow-x: hidden;
+overflow-x: hidden;
 }
-
 
 .header-image { 
-    width: 100%; 
+width: 100%; 
 }
+
 .container { 
-    display: flex; 
+display: flex; 
 }
+
 .left, .right { flex: 1; padding: 10px; }
 
 #chart4{
-    margin-top: 30px;
+margin-top: 30px;
+}
 
-}
 #chart6{
-    margin-top: 30px;
-    background-color: rgba(197, 197, 197,0.1);
+margin-top: 30px;
+background-color: rgba(197, 197, 197,0.1);
 }
+
 #chart2 {
-    background-color: rgba(197, 197, 197,0.1);
-    border-radius: 20px;
-    height: 100%; /* o una altura específica que pueda contener todos tus elementos */
+background-color: rgba(197, 197, 197,0.1);
+border-radius: 20px;
+height: 100%; 
 }
 
 #svg-container {
-    border: solid 5px rgba(197, 197, 197,0.1);
-    border-radius: 20px;
-    height: auto; /* o una altura específica que pueda contener todos tus elementos */
-    overflow-y: auto; /* asegúrate de que esto esté permitiendo el scroll */
-    background-color: rgba(197, 197, 197,0.1);
+border: solid 5px rgba(197, 197, 197,0.1);
+border-radius: 20px;
+height: auto; 
+overflow-y: auto; 
+background-color: rgba(197, 197, 197,0.1);
+}
 
-}
 .selected-album {
-    stroke: #ffffff; /* Color del borde */
-    stroke-width: 5px; /* Ancho del borde */
-    stroke-opacity: 1; /* Opacidad del borde */
+stroke: #ffffff; 
+stroke-width: 5px; 
+stroke-opacity: 1; 
 }
+
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px; /* Altura del header */
-    text-align: center; /* Asegura que el texto también esté centrado horizontalmente */
+display: flex;
+justify-content: center;
+align-items: center;
+height: 200px;
+text-align: center; 
 }
+
 .selected-artist {
-    stroke: white;
-    stroke-width: 4; /* Ajusta el ancho del margen según lo necesites */
-  }
-  
+stroke: white;
+stroke-width: 4;
+}
+
 #chart3 {
-    border-radius: 10px;
-    margin: 10px;
-    height: 800px;
-    width: 98%;
-    background-color: rgba(197, 197, 197,0.1);
-    border-radius: 20px;
-    margin-top: 50px;
+border-radius: 10px;
+margin: 10px;
+height: 800px;
+width: 98%;
+background-color: rgba(197, 197, 197,0.1);
+border-radius: 20px;
+margin-top: 50px;
 }
 
 .container {
-    display: flex;
-    flex-direction: column; /* Esto coloca los contenedores .top y .bottom uno encima del otro */
-  }
-  
-  .top {
-    display: flex; /* Esto mantiene a chart2 y chart4 lado a lado */
-  }
-  
-  .left, .right {
-    flex: 1; /* Esto les da a los contenedores .left y .right tamaños iguales dentro de .top */
-  }
-  
-#chart1 {
-    border-radius: 40px;
-    margin: 10px;
-    height: 800px;
-    width: 98%;
-    background-color: rgba(197, 197, 197,0.1);
-    border-radius: 20px;  
-    margin-top: 50px;
+display: flex;
+flex-direction: column;
 }
-#chart5 {
-    background-color: rgba(197, 197, 197,0.1);
-    border-radius: 20px;
-    margin-top: 50px;
-}
-.low-opacity {
-    opacity: 0.5; /* Ajusta este valor según la opacidad que desees */
-  }
-.reset-opacity{
-    opacity: 1;
-}
-.texto-sombreado {
-    color: rgb(21, 255, 0); /* Color del texto */
-    text-shadow: -1px 1px rgb(255, 255, 255); /* Sombreado blanco */
 
+.top {
+display: flex;
+}
+
+.left, .right {
+flex: 1; 
+}
+
+#chart1 {
+border-radius: 40px;
+margin: 10px;
+height: 800px;
+width: 98%;
+background-color: rgba(197, 197, 197,0.1);
+border-radius: 20px;  
+margin-top: 50px;
+}
+
+#chart5 {
+background-color: rgba(197, 197, 197,0.1);
+border-radius: 20px;
+margin-top: 50px;
+}
+
+.low-opacity {
+opacity: 0.5; 
+}
+
+.reset-opacity{
+opacity: 1;
+}
+
+.texto-sombreado {
+color: rgb(21, 255, 0);
+text-shadow: -1px 1px rgb(255, 255, 255); 
 }
 
 #chart5, #chart6 {
-    border-radius: 10px;
-    margin: 10px;
-    height: 800px;
-    width: 900px;
-    border: solid 5px rgba(197, 197, 197,0.1);
-    border-radius: 20px;
-    margin-top: 50px;
+border-radius: 10px;
+margin: 10px;
+height: 800px;
+width: 900px;
+border: solid 5px rgba(197, 197, 197,0.1);
+border-radius: 20px;
+margin-top: 50px;
 }
 
 .container-bottom {
-    display: flex;
-    flex-direction: row; /* Esto alinea los elementos secundarios en línea /
-    align-items: center; / Esto los centra verticalmente, si es necesario /
-    justify-content: center; / Esto los centra horizontalmente en el contenedor */
-  }
+display: flex;
+flex-direction: row; 
+}
 
-  .header-title {
-    font-size: 3em;
-    color: #ffffff; 
-    text-align: center; 
-    font-family: 'Arial', sans-serif; 
-    text-transform: uppercase; 
-    letter-spacing: 5px; 
-    text-shadow: 2px 2px 4px #000000; 
-    margin-bottom: 30px;
-    }
+.header-title {
+font-size: 3em;
+color: #ffffff; 
+text-align: center; 
+font-family: 'Arial', sans-serif; 
+text-transform: uppercase; 
+letter-spacing: 5px; 
+text-shadow: 2px 2px 4px #000000; 
+margin-bottom: 30px;
+}
