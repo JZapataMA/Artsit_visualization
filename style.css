@@ -5,10 +5,6 @@ background-color: rgb(15, 15, 15);
 color: #f5f5f5;
 }
 
-html { 
-overflow-x: hidden;
-}
-
 .header-image { 
 width: 100%; 
 }

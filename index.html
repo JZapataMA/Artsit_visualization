@@ -58,11 +58,12 @@
                     estos pueden ser clickeados para que las visualizaciones se actualicen con los datos del artista
                     seleccionado, luego poseemos todos sus albumes con nombres y portadas, junto a este, hay un sector vacio 
                     que se rellena con canciones al momento de clickear un album, estas canciones perteneces a dicho album seleccionado.
-                    Luego, poseemos dos graficos de barras, el primero corresponde a la popularidad de cada album, mientras que el segundo
-                    corresponde a la duracion en minutos de cada album. Finalmente, poseemos un diagrama de nodos, donde cada nodo representa
+                    Luego, poseemos un treemap el cual tiene un color mas negro mientras mas popular ademas de un tamaño mas grande, y 
+                    un color mas blanco mientras menos popular, junto a un tamaño mas pequeño, despues tenemos un diagrama de nodos donde cada nodo representa
                     a un album con su respectiva portada, y el tamaño de este representa su popularidad, mientras mas grande el nodo, mas popular 
-                    el album. Estos nodos pueden ser clickeados para que a su derecha se refleje informacion sobre el album correspondiente.
-                </p>
+                    el album. Estos nodos pueden ser clickeados para que a su derecha se refleje informacion sobre el album correspondiente. y
+                    por ultimo tenemos un grafico de barras que corresponde a la duracion en minutos de cada album. Todas estas visualizaciones son
+                    actualizadas al momento de elegir un artista, y el grafico de barras resalta el album seleccionado en el selector de albumes al principio del HTML.
             </div>
 
         </div>
@@ -126,11 +127,12 @@
                 </p>
 
                 <!-- Puedes agregar los P que sean necesarios -->
-                <h4>Acción: Comparar</h4>
-                <h4>Objetivo: Valor</h4>
+                <h4>Acción: Explorar</h4>
+                <h4>Objetivo: Feature</h4>
                 <p>Justificar la acción-objetivo con el dominio presentado: Buscamos comparar los valores entre albumes
-                    tanto de popularidad como de duracion. Asi podemos ver facilmente que album es mas popular, y ademas
-                    podemos hacer un analisis rapido de la duracion de cada album.
+                    respecto a su popularidad. Asi podemos ver facilmente que album es mas popular. Para esto, usamos dos
+                    visualizaciones, una para reflejar los datos de forma rapida y otra para que el usuario pueda investigar
+                    mas a fondo, teniendo la opcion de interactuar con la visualizacion.
                  </p>
             </div>
             <div class="response">
@@ -143,12 +145,12 @@
                 </p>
 
                 <!-- Puedes agregar los P que sean necesarios -->
-                <h4>Acción: Explorar</h4>
-                <h4>Objetivo: Feature</h4>
-                <p>Justificar la acción-objetivo con el dominio presentado: Nuestra ultima tarea consistio en  perimitirle 
-                    al usuario explorar los albumes mediante un diagrama de nodos, donde cada nodo representa un album, y su tamaño.
-                    De esta forma, el usuario puede ver facilmente cuales son los albumes mas populares, y al clickearlos, puede ver
-                    informacion sobre ellos. Tambien se le permite a este hacer zoom en caso de no lograr ver de forma correcta los nodos.
+                <h4>Acción: Comparar</h4>
+                <h4>Objetivo: Valor</h4>
+                <p>Justificar la acción-objetivo con el dominio presentado: Nuestra ultima tarea consistio en hacer una comparacion
+                    rapida de las duraciones en minutos de cada album, esto es porque pensamos que la duracion puede ser una variable
+                    importante a la hora de elegir un album para escuchar. Para esto, usamos un grafico de barras, donde cada barra
+                    representa un album, y su tamaño representa la duracion en minutos de este.
                 </p>
             </div>
         </div>
@@ -171,12 +173,12 @@
                 <!-- Puedes agregar los P que sean necesarios -->
                 <h4>Respuesta:</h4>
                 <p>
-                    Para la segunda tarea visual, decidimos crear 2 graficos de barras, uno bajo el otro, donde el primero
-                    representa la popularidad de cada album y el segundo representa su duracion. El primer grafico posee barras
-                    amarillas, mientras menos popular, mas clara es la barra, y mientras mas popular, mas fuerte es el color de esta,
-                    esta decision se tomo para que resaltaran aquellos albumes que son mas populares. El segundo grafico posee barras
-                    con colores blanco y gris de forma intercalada, estos colores fueron decididos con el motivo de poder diferenciar
-                    bien las barras contiguas, y que el usuario pudiera ver facilmente la duracion de cada album.
+                    Para la segunda tarea visual, decidimos crear 2 visualizaciones, una para mostrar los datos de forma rapida
+                    y otra para que el usuario pueda interactuar con el de forma mas amena y atractiva. En este caso para mostrar
+                    de forma rapida los datos utilizamos un treemap, donde cada album es representado por un rectangulo, y su tamaño
+                    representa su popularidad, mientras mas grande el rectangulo, mas popular el album. Para la segunda visualizacion
+                    decidimos usar un diagrama de nodos, donde cada nodo representa un album, y su tamaño representa su popularidad,
+                    sin embargo, ademas este ultimo es interactivo, por lo que el usuario puede investigar mas a fondo.
                 </p>
             </div>
             <div class="response">
@@ -184,11 +186,8 @@
                 <!-- Puedes agregar los P que sean necesarios -->
                 <h4>Respuesta:</h4>
                 <p>
-                    Para la tercera tarea, decidimos crear dos containers, uno al lado del otro, donde el de la izquierda posee
-                    un diagrama de nodos, donde podemos seleccionar cualquier album, y el de la derecha posee informacion sobre
-                    el album seleccionado. Decidimos hacer esto de esa forma con el fin de que el usuario pueda explorar los albumes
-                    directamente desde su popularidad. De esta forma, el usuario puede tomar decisiones como por ejemplo, que album escuchar
-                    basado en su popularidad, duracion y cantidad de canciones.
+                    Para la tercera tarea, decidimos crear un grafico de barras, con el objetivo de comparar las duraciones en minutos
+                    de cada album. Para esto, cada barra representa un album, y su tamaño representa la duracion en minutos de este.
                 </p>
             </div>
         </div>

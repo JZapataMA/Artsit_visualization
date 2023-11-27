@@ -130,7 +130,6 @@ function showinfoalbum(data){
 
     // Agregar texto para detalles del álbum
     // Ajustar las posiciones 'y' según sea necesario
-    console.log(data);
     SVG6.append("text")
         .attr("x", 10)
         .attr("y", 200)
@@ -161,7 +160,6 @@ function showinfoalbum(data){
         .style("font", "25px 'Circular'")
         .attr("fill", "white")
         .text(`# Canciones: ${data.Canciones}`);
-        console.log(data);
 
     // agregemos la cancion mas popular ordenando las canciones por popularidad
     // y tomando la primera
@@ -358,26 +356,27 @@ SVG.append("text")
 d3.json('https://raw.githubusercontent.com/JZapataMA/Artsit_visualization/main/data/artistas.json')
 .then(data => {
     artistas_df = data;
-    console.log(artistas_df);
 
-    artistas_df.forEach(artista => {
-        defs.append('pattern')
-            .attr('id', `pattern-${artista.Artista.replace(/\s/g, '-')}`)
-            .attr('patternUnits', 'objectBoundingBox')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .append('image')
-            .attr('href', artista.foto)
-            .attr('width', 200)
-            .attr('height', 200)
-            .attr('preserveAspectRatio', 'xMidYMid slice');
-    });
+    // Une los datos de artistas_df con un nuevo elemento pattern
+    const pattern = defs.selectAll('.pattern')
+    .data(artistas_df)
+    .enter().append('pattern')
+    .attr('id', d => `pattern-${d.Artista.replace(/\s/g, '-')}`)
+    .attr('patternUnits', 'objectBoundingBox')
+    .attr('width', '100%')
+    .attr('height', '100%');
+
+    // Agrega un elemento image dentro de cada pattern
+    pattern.append('image')
+    .attr('href', d => d.foto)
+    .attr('width', 200)
+    .attr('height', 200)
+    .attr('preserveAspectRatio', 'xMidYMid slice');
 
     ye_pic.attr('fill', 'url(#pattern-Kanye-West)');
     tay_pic.attr('fill', 'url(#pattern-Taylor-Swift)');
     ken_pic.attr('fill', 'url(#pattern-Kendrick-Lamar)');
 });
-
 
 // Recortamos el texto
 SVG2.append("defs") 
@@ -543,81 +542,69 @@ function updateVisualization(data,canciones) {
         .style("background-color", "transparent")
         .html(d => `<div style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.Album}</div>`);
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////// Agregamos el grafico de barras de Popularidad ////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////// Agregamos el treeMap Popularidad ////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
 
+    // Define márgenes y dimensiones para el treemap
+    const marginsTree = { top: 20, right: 30, bottom: 40, left: 200 };
+    const innerWidthTree = WIDTH_C1 - marginsTree.left - marginsTree.right;
+    const innerHeightTree = HEIGHT_C1 - marginsTree.top - marginsTree.bottom;
+
+    // Crea una jerarquía de datos y suma los valores de popularidad
+    const root = d3.hierarchy({ children: data })
+        .sum(d => d.Popularidad)
+        .sort((a, b) => b.value - a.value);
+
+    // Crea el layout del treemap
+    d3.treemap()
+        .size([innerWidthTree, innerHeightTree])
+        .padding(1)
+        (root);
+
+    // Escala de color que varía con la popularidad
+    let colorScale = d3.scaleSequential()
+        .domain([0, d3.max(root.leaves(), d => d.value)])
+        .interpolator(d3.interpolateGreys);
+
+    // Selecciona y añade el grupo que contendrá el treemap
+    const gTree = SVG1.append('g')
+        .attr('transform', `translate(${marginsTree.left},${marginsTree.top})`);
+
+    // Agrega las cajas del treemap
+    gTree.selectAll('rect')
+        .data(root.leaves())
+        .enter().append('rect')
+        .attr('x', d => d.x0)
+        .attr('y', d => d.y0)
+        .attr('width', d => d.x1 - d.x0)
+        .attr('height', d => d.y1 - d.y0)
+        .attr('fill', d => colorScale(d.value)) 
+
+    // Calcula el factor de escala para el tamaño del texto
+    const textScale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([5, 20]); 
+
+    // Agrega las etiquetas de texto con el tamaño escalado
+    gTree.selectAll('text')
+    .data(root.leaves())
+    .enter()
+    .append('text')
+    .attr('x', d => d.x0 + 5) 
+    .attr('y', d => d.y0 + 20) 
+    .text(d => d.data.Album)
+    .attr('fill', 'white')
+    .style('font-size', d => textScale(d.value) + 'px'); 
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////// Agregamos el grafico de barras de Duracion ////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     // Define márgenes para el gráfico de barras
     const marginsBar = { top: 20, right: 30, bottom: 40, left: 200 };
     const innerWidthBar = WIDTH_C1 - marginsBar.left - marginsBar.right;
     const innerHeightBar = HEIGHT_C1 - marginsBar.top - marginsBar.bottom;
-
-    // Escalas y ejes para el gráfico de barras
-    var xScaleBar = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.Popularidad)])
-        .range([0, innerWidthBar]);
-
-    var yScaleBar = d3.scaleBand()
-        .domain(data.map(d => d.Album))
-        .range([0, innerHeightBar])
-        .padding(0.1);
-
-    // Seleccionar y añadir el grupo que contendrá el gráfico de barras
-    const gBar = SVG1.append('g')
-        .attr('transform', `translate(${marginsBar.left},${marginsBar.top})`);
-
-    // Agregar barras
-    gBar.selectAll(".bar")
-        .data(data)
-        .enter().append("rect")
-        .attr("id", d => `album-${d.Album.replace(/[^a-zA-Z0-9]/g, '-')}`)
-        .attr("class", "bar")
-        .attr("x", 0)
-        .attr("y", d => yScaleBar(d.Album))
-        .attr("width", d => xScaleBar(d.Popularidad))
-        .attr("height", yScaleBar.bandwidth())
-        .attr("fill", "rgb(255, 0, 0)")
-        .on("mouseover", function(event, d) {
-            showTooltippo(event, d);
-        })
-        // Agrega el evento "mouseout" para ocultar el tooltip
-        .on("mouseout", function() {
-            hideTooltip();
-        });
-        ;
-
-    // Agregamos ejes
-    gBar.append("g")
-        .call(d3.axisLeft(yScaleBar));
-
-    gBar.append("g")
-        .attr("transform", `translate(0,${innerHeightBar})`)
-        .call(d3.axisBottom(xScaleBar));
-
-    // Etiquetas de los ejes
-    gBar.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", innerWidthBar / 2)
-        .attr("y", innerHeightBar + marginsBar.bottom - 10)
-        .text("Popularidad")
-        .attr("fill", "white");
-
-    gBar.append("text")
-        .attr("text-anchor", "end")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -marginsBar.left + 20)
-        .attr("x", -marginsBar.top - (innerHeightBar / 2))
-        .text("Álbum")
-        .attr("font-size", "20px")
-        .attr("fill", "white");
-
-
-    SVG1.attr("transform", "translate(80, 0)");
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////// Agregamos el grafico de barras de Duracion ////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
 
     // Escalas y ejes para el gráfico de barras
     var xScaleBar = d3.scaleLinear()
@@ -681,12 +668,7 @@ function updateVisualization(data,canciones) {
 
     const bars = d3.selectAll('.bar');
     bars.attr('fill', (d, i) => i % 2 === 0 ? 'white' : 'lightgray');
-    const colorScale = d3.scaleLinear()
-    .domain([0, 100])
-    .range(['lightyellow', 'yellow']);
 
-    const bars_pop = d3.select("#chart1").select("svg").selectAll('.bar')
-    .attr('fill', d => colorScale(d.Popularidad));  
 
     ////////////////////////////////////////////////////////////////////////////////
     //////////////////////// Agregamos el diagrama de nodos ////////////////////////
